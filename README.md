@@ -23,10 +23,10 @@ Each is built for linux/amd64 and linux/arm64 from `Dockerfiles/<name>/Dockerfil
 
 | Image | Port | |
 |---|---|---|
-| `ghcr.io/<owner>/deeplynx/server` | 5000 | API; applies its database migrations at startup |
-| `ghcr.io/<owner>/deeplynx/ui` | 3000 | Web UI, built with frontend authentication disabled |
-| `ghcr.io/<owner>/deeplynx/mcp` | 43656 | MCP server |
-| `ghcr.io/<owner>/deeplynx/docs` | 3001 | Documentation site |
+| `ghcr.io/<owner>/deeplynx-server` | 5000 | API; applies its database migrations at startup |
+| `ghcr.io/<owner>/deeplynx-ui` | 3000 | Web UI, built with frontend authentication disabled |
+| `ghcr.io/<owner>/deeplynx-mcp` | 43656 | MCP server |
+| `ghcr.io/<owner>/deeplynx-docs` | 3001 | Documentation site |
 
 The database is the unmodified `pgvector/pgvector:0.8.3-pg18` image, so it
 isn't built here. The insight services aren't built either: they live in an

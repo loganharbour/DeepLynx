@@ -2,7 +2,7 @@ name: build-images
 run-name: "Build images ${{ inputs.tag }} from ${{ inputs.ref }}"
 
 # Builds the DeepLynx server, ui, mcp and docs images from a commit of this
-# repository and pushes them to ghcr.io/<owner>/deeplynx/<image>:<tag>.
+# repository and pushes them to ghcr.io/<owner>/deeplynx-<image>:<tag>.
 #
 #   gh workflow run build-images.yml --ref images -f ref=0.8.0 -f tag=0.8.0
 #
@@ -82,10 +82,10 @@ jobs:
             echo "::error::Not a valid image tag: $TAG"
             exit 1
           fi
-          # ghcr.io/<owner>/deeplynx; ghcr.io requires lowercase names
+          # ghcr.io/<owner>; ghcr.io requires lowercase names
           {
             echo "sha=$(git rev-parse HEAD)"
-            echo "prefix=ghcr.io/${GITHUB_REPOSITORY,,}"
+            echo "prefix=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}"
           } >> "$GITHUB_OUTPUT"
 
   server:
@@ -97,7 +97,7 @@ jobs:
     uses: ./.github/workflows/build-image.yml
     with:
       name: server
-      image: ${{ needs.meta.outputs.prefix }}/server
+      image: ${{ needs.meta.outputs.prefix }}/deeplynx-server
       tag: ${{ inputs.tag }}
       repository: ${{ inputs.repository }}
       sha: ${{ needs.meta.outputs.sha }}
@@ -112,7 +112,7 @@ jobs:
     uses: ./.github/workflows/build-image.yml
     with:
       name: ui
-      image: ${{ needs.meta.outputs.prefix }}/ui
+      image: ${{ needs.meta.outputs.prefix }}/deeplynx-ui
       tag: ${{ inputs.tag }}
       repository: ${{ inputs.repository }}
       sha: ${{ needs.meta.outputs.sha }}
@@ -140,7 +140,7 @@ jobs:
     uses: ./.github/workflows/build-image.yml
     with:
       name: mcp
-      image: ${{ needs.meta.outputs.prefix }}/mcp
+      image: ${{ needs.meta.outputs.prefix }}/deeplynx-mcp
       tag: ${{ inputs.tag }}
       repository: ${{ inputs.repository }}
       sha: ${{ needs.meta.outputs.sha }}
@@ -155,7 +155,7 @@ jobs:
     uses: ./.github/workflows/build-image.yml
     with:
       name: docs
-      image: ${{ needs.meta.outputs.prefix }}/docs
+      image: ${{ needs.meta.outputs.prefix }}/deeplynx-docs
       tag: ${{ inputs.tag }}
       repository: ${{ inputs.repository }}
       sha: ${{ needs.meta.outputs.sha }}
@@ -192,6 +192,6 @@ jobs:
                 cancelled) status="⚪ cancelled" ;;
                 *) status="❌ ${result#*=}" ;;
               esac
-              echo "| $name | \`$PREFIX/$name:$TAG\` | $status |"
+              echo "| $name | \`$PREFIX/deeplynx-$name:$TAG\` | $status |"
             done
           } >> "$GITHUB_STEP_SUMMARY"
