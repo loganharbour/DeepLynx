@@ -38,6 +38,3 @@ build time. The defaults (`api-url`, `docs-url`) match DeepLynx's
 `http://localhost:5000/api` and the docs at `http://localhost:3001/docs`. The
 UI's server side reads `BACKEND_BASE_URL`, `NEXTAUTH_SECRET` and the rest at
 runtime, as in `docker-compose.yaml`.
-
-New ghcr.io packages are private; make each one public in its package settings
-after the first build.
